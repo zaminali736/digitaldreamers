@@ -258,63 +258,92 @@ function handleBusSearch(e) {
     const to = document.getElementById('searchTo').value;
     const date = document.getElementById('searchDate').value;
 
-    searchTransitOptions(from, to, date);
+    // Show loading message
+    const searchResults = document.getElementById('search-results');
+    searchResults.innerHTML = '<p>Searching for buses...</p>';
+
+    // Call the simulated bus search function
+    simulateBusSearch(from, to, date)
+        .then(buses => {
+            displayBusResults(buses);
+        })
+        .catch(error => {
+            console.error('Error searching for buses:', error);
+            searchResults.innerHTML = '<p>An error occurred while searching for buses. Please try again.</p>';
+        });
 }
 
-function searchTransitOptions(origin, destination, date) {
-    const request = {
-        origin: origin,
-        destination: destination,
-        travelMode: 'TRANSIT',
-        transitOptions: {
-            departureTime: new Date(date)
-        }
-    };
-
-    directionsService.route(request, (result, status) => {
-        if (status === 'OK') {
-            directionsRenderer.setDirections(result);
-            displayTransitResults(result);
-        } else {
-            showMessage('No transit options found. Please try a different route or date.', 'error');
-        }
+function simulateBusSearch(from, to, date) {
+    // Simulate a delay to mimic an API call
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            // Simulate a 20% chance of no buses found
+            if (Math.random() < 0.2) {
+                resolve([]);
+            } else {
+                const buses = [
+                    {
+                        name: "Express Bus 1",
+                        departure: "08:00 AM",
+                        arrival: "12:00 PM",
+                        duration: "4 hours",
+                        price: 500,
+                        seats: 30
+                    },
+                    {
+                        name: "Luxury Bus 2",
+                        departure: "10:00 AM",
+                        arrival: "02:30 PM",
+                        duration: "4 hours 30 minutes",
+                        price: 750,
+                        seats: 25
+                    },
+                    {
+                        name: "Night Bus 3",
+                        departure: "11:00 PM",
+                        arrival: "05:00 AM",
+                        duration: "6 hours",
+                        price: 600,
+                        seats: 35
+                    }
+                ];
+                resolve(buses);
+            }
+        }, 1000); // Simulate a 1-second delay
     });
 }
 
-function displayTransitResults(result) {
+function displayBusResults(buses) {
     const searchResults = document.getElementById('search-results');
     searchResults.innerHTML = '<h3>Search Results:</h3>';
 
-    const routes = result.routes[0].legs[0];
-    const transitSteps = routes.steps.filter(step => step.travel_mode === 'TRANSIT');
-
-    if (transitSteps.length === 0) {
-        searchResults.innerHTML += '<p>No direct bus routes found for this journey.</p>';
+    if (buses.length === 0) {
+        searchResults.innerHTML += '<p>No buses found for the selected route and date.</p>';
     } else {
-        transitSteps.forEach((step, index) => {
-            const transit = step.transit;
+        buses.forEach((bus, index) => {
             const busElement = document.createElement('div');
             busElement.className = 'bus-result';
             busElement.innerHTML = `
-                <h3>${transit.line.name} - ${transit.line.vehicle.name}</h3>
-                <p><strong>From:</strong> ${transit.departure_stop.name}</p>
-                <p><strong>To:</strong> ${transit.arrival_stop.name}</p>
-                <p><strong>Departure:</strong> ${new Date(transit.departure_time.value).toLocaleString()}</p>
-                <p><strong>Arrival:</strong> ${new Date(transit.arrival_time.value).toLocaleString()}</p>
-                <p><strong>Duration:</strong> ${step.duration.text}</p>
-                <button class="book-now-btn" onclick="bookTransit(${index})">Book Now</button>
+                <h3>${bus.name}</h3>
+                <p><strong>Departure:</strong> ${bus.departure}</p>
+                <p><strong>Arrival:</strong> ${bus.arrival}</p>
+                <p><strong>Duration:</strong> ${bus.duration}</p>
+                <p><strong>Price:</strong> ₹${bus.price}</p>
+                <p><strong>Available Seats:</strong> ${bus.seats}</p>
+                <button class="book-now-btn" onclick="bookBus(${index})">Book Now</button>
             `;
             searchResults.appendChild(busElement);
         });
     }
 }
 
-function bookTransit(transitIndex) {
+function bookBus(busIndex) {
     if (!currentUser) {
         showMessage('Please log in to book a ticket', 'error');
         switchTab('login');
     } else {
-        showMessage(`Booking transit option ${transitIndex + 1}. Implement actual booking logic.`, 'success');
+        showMessage(`Booking bus ${busIndex + 1}. Implement actual booking logic.`, 'success');
+        // Here you would typically open a booking form or modal with the selected bus details
     }
 }
 
