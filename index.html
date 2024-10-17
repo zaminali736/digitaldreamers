@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suvikshan Technologies - Online Bus Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="50" height="50" rx="25" fill="#4A90E2"/>
+                    <path d="M15 35H35M17 15H33C34.1046 15 35 15.8954 35 17V29C35 30.1046 34.1046 31 33 31H17C15.8954 31 15 30.1046 15 29V17C15 15.8954 15.8954 15 17 15Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M20 35V31M30 35V31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15 23H35" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>Suvikshan Technologies</h1>
+            </div>
+            <ul>
+                <li><a href="#home" class="nav-link active" data-tab="home">Home</a></li>
+                <li><a href="#register" class="nav-link" data-tab="register">Register</a></li>
+                <li><a href="#login" class="nav-link" data-tab="login">Login</a></li>
+                <li><a href="#check-booking" class="nav-link" data-tab="check-booking">Check Booking</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="tab-content active">
+            <h2>Welcome to Suvikshan Technologies Bus Booking</h2>
+            <div class="search-container">
+                <h3>Search for Buses</h3>
+                <form id="bus-search-form">
+                    <div class="form-group">
+                        <label for="searchFrom">From:</label>
+                        <select id="searchFrom" name="searchFrom" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchTo">To:</label>
+                        <select id="searchTo" name="searchTo" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchDate">Date:</label>
+                        <input type="date" id="searchDate" name="searchDate" required>
+                    </div>
+                    <button type="submit">Search Buses</button>
+                </form>
+            </div>
+            <div id="search-results"></div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=400&q=80" alt="Bus Travel">
+            </div>
+            <p>Experience comfortable and safe journeys across India with our premium bus services.</p>
+        </section>
+
+        <section id="register" class="tab-content">
+            <h2>Register</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <section id="login" class="tab-content">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="loginPhone">Phone Number:</label>
+                    <input type="tel" id="loginPhone" name="loginPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <button id="loginWithOTP">Login with OTP</button>
+        </section>
+
+        <section id="booking" class="tab-content">
+            <h2>Book Ticket</h2>
+            <form id="booking-form">
+                <div class="form-group">
+                    <label for="bookingFrom">From:</label>
+                    <select id="bookingFrom" name="bookingFrom" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="bookingTo">To:</label>
+                    <select id="bookingTo" name="bookingTo" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="bookingDate">Date of Journey:</label>
+                    <input type="date" id="bookingDate" name="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookingSeats">Number of Seats:</label>
+                    <input type="number" id="bookingSeats" name="bookingSeats" min="1" max="5" required>
+                </div>
+                <button type="submit">Book Now</button>
+            </form>
+        </section>
+
+        <section id="check-booking" class="tab-content">
+            <h2>Check Booking</h2>
+            <form id="check-booking-form">
+                <div class="form-group">
+                    <label for="checkPhone">Phone Number:</label>
+                    <input type="tel" id="checkPhone" name="checkPhone" required>
+                </div>
+                <button type="submit">Check</button>
+            </form>
+            <div id="booking-details"></div>
+        </section>
+
+        <section id="user-dashboard" class="tab-content">
+            <h2>User Dashboard</h2>
+            <div id="user-info"></div>
+            <h3>My Bookings</h3>
+            <div id="user-bookings"></div>
+            <h3>Favorite Routes</h3>
+            <div id="favorite-routes"></div>
+            <button id="logout-button">Logout</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Suvikshan Technologies. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
